@@ -68,15 +68,23 @@ def summarize_news(items: List[NewsItem], topic: Optional[str], use_crawl: bool 
                 temperature=None,
             )
             
-            # 응답이 비어있거나 너무 짧으면 기본 메시지 사용
+            # LLM 응답이 None이거나 비어있으면 본문에서 직접 요약 생성
             if not individual_summary or len(individual_summary.strip()) < 10:
-                # 본문에서 핵심 문장 추출 시도
-                content_preview = content[:300].replace('\n', ' ').strip()
-                individual_summary = f"핵심 내용: {content_preview}...\n\n한 줄 요약: {it.title} 관련 기사입니다."
-            
-            # individual_summary가 여전히 비어있으면 제목 기반 요약
-            if not individual_summary or len(individual_summary.strip()) < 5:
-                individual_summary = f"제목: {it.title}\n\n핵심 내용: 기사 본문을 읽고 요약했습니다.\n\n한 줄 요약: {it.title}"
+                # 본문에서 핵심 문장 추출
+                content_clean = content.replace('\n', ' ').strip()
+                # 본문의 앞부분과 뒷부분을 조합하여 요약
+                if len(content_clean) > 500:
+                    preview_start = content_clean[:250]
+                    preview_end = content_clean[-150:] if len(content_clean) > 400 else ""
+                    content_preview = f"{preview_start}... {preview_end}" if preview_end else preview_start
+                else:
+                    content_preview = content_clean
+                
+                individual_summary = f"""제목: {it.title}
+
+핵심 내용: {content_preview}
+
+한 줄 요약: {it.title}에 대한 기사입니다."""
         except Exception as e:
             # 에러 발생 시 기본 요약 사용
             print(f"개별 요약 생성 오류 (기사 {i}): {e}")
@@ -112,7 +120,7 @@ def summarize_news(items: List[NewsItem], topic: Optional[str], use_crawl: bool 
             temperature=None,
         )
         
-        # 응답이 비어있거나 너무 짧으면 기본 메시지 사용
+        # LLM 응답이 None이거나 비어있으면 기본 요약 생성
         if not final_summary or len(final_summary.strip()) < 20:
             final_summary = f"""## 전체 동향 요약
 {topic or "요청하신 주제"}에 대한 {len(items)}개의 기사를 수집했습니다.

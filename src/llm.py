@@ -33,11 +33,11 @@ def chat_completion(messages, max_completion_tokens=800, temperature=None) -> st
         res = client.chat.completions.create(**params)
         content = res.choices[0].message.content
         
-        # 응답이 비어있거나 None이면 기본 메시지 반환
+        # 응답이 비어있거나 None이면 None 반환 (호출자가 처리)
         if not content or len(content.strip()) == 0:
-            return "응답을 생성하지 못했습니다."
+            return None
         
         return content
     except Exception as e:
         print(f"LLM 호출 오류: {e}")
-        return f"요약 생성 중 오류가 발생했습니다: {str(e)}"
+        return None  # None 반환하여 호출자가 처리하도록
