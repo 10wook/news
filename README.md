@@ -20,7 +20,7 @@ Streamlit 기반의 AI 뉴스 요약 챗봇 애플리케이션입니다. 일반 
 ### 1. 저장소 클론 또는 파일 다운로드
 
 ```bash
-cd /Users/hanyoungwook/2026-1/싸피/0116
+cd /0116
 ```
 
 ### 2. 패키지 설치
@@ -40,7 +40,7 @@ cp .env.example .env
 `.env` 파일 내용:
 ```
 OPENAI_API_KEY=실제_GMS_API_키
-OPENAI_BASE_URL=https://gms.ssafy.io/gmsapi/api.openai.com/v1
+OPENAI_BASE_URL=
 OPENAI_MODEL=gpt-5-nano
 GOOGLE_NEWS_RSS=https://news.google.com/rss/search?q=AI&hl=ko&gl=KR&ceid=KR:ko
 ```
@@ -105,7 +105,7 @@ streamlit run app.py
 | 변수명 | 설명 | 필수 | 기본값 |
 |--------|------|------|--------|
 | `OPENAI_API_KEY` | GMS API 키 | 예 | 없음 (실행 시 입력 가능) |
-| `OPENAI_BASE_URL` | GMS base URL | 아니오 | `https://gms.ssafy.io/gmsapi/api.openai.com/v1` |
+| `OPENAI_BASE_URL` | GMS base URL | 아니오 | |
 | `OPENAI_MODEL` | 사용할 모델명 | 아니오 | `gpt-5-nano` |
 | `GOOGLE_NEWS_RSS` | Google News RSS URL | 아니오 | AI 관련 뉴스 RSS |
 
