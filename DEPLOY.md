@@ -37,7 +37,7 @@ Streamlit Cloud 대시보드에서:
 2. 다음 형식으로 입력:
 ```
 OPENAI_API_KEY=실제_GMS_API_키
-OPENAI_BASE_URL=https://gms.ssafy.io/gmsapi/api.openai.com/v1
+OPENAI_BASE_URL=
 OPENAI_MODEL=gpt-5-nano
 GOOGLE_NEWS_RSS=https://news.google.com/rss/search?q=AI&hl=ko&gl=KR&ceid=KR:ko
 ```
